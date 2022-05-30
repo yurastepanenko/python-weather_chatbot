@@ -3,6 +3,7 @@ from pprint import pprint
 import json
 import requests
 from config import open_weather_token
+from constans import EMOJIS
 
 
 
@@ -27,16 +28,18 @@ def get_weather(city, open_weather_token):
         sunrise_timestamp = datetime.fromtimestamp(data['sys']['sunrise'])
         # закат
         sunset_timestamp = datetime.fromtimestamp(data['sys']['sunset'])
+        # наша продолжительность дня
+        length_day = sunset_timestamp - sunrise_timestamp
 
         pprint(f'{datetime.now().strftime("%Y-%m-%d %H:%M")}\n'
               f'Погода в городе {city}\n'
               f'Температура: {weather}\u2103\n'
               f'Влажность: {humidity}%\n'
               f'Давление: {pressure} мм.рт.ст.\n'
-              f'Ветер: {wind}м/с\n'
+              f'Ветер: {wind} м/с\n'
               f'Восход солнца: {sunrise_timestamp}\n'
-              f'Закат солнца: {sunset_timestamp}\n')
-              # f'Продолжительность дня {len_of_day}\n'
+              f'Закат солнца: {sunset_timestamp}\n'
+              f'Продолжительность дня {length_day}')
 
 
 
