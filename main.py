@@ -6,7 +6,6 @@ from config import open_weather_token
 from constans import EMOJIS
 
 
-
 def get_weather(city, open_weather_token):
     """Процедура получает по АПИ погоду(токен мы зарегили заранее)
     Парсит ответ в виде джейсона и возвращает пользователю"""
@@ -17,7 +16,12 @@ def get_weather(city, open_weather_token):
             f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={open_weather_token}',
             params={"units": "metric"})
         data = r.json()
-        #pprint(data)
+        # pprint(data)
+        weather_description = data['weather'][0]['main']
+        if weather_description in EMOJIS:
+            wd = EMOJIS[weather_description]
+        else:
+            print('ХМ! Что-то необычное, у нас пока нет такого EMOJI :(((')
 
         city = data['name']
         weather = data['main']['temp']
@@ -31,17 +35,15 @@ def get_weather(city, open_weather_token):
         # наша продолжительность дня
         length_day = sunset_timestamp - sunrise_timestamp
 
-        pprint(f'{datetime.now().strftime("%Y-%m-%d %H:%M")}\n'
-              f'Погода в городе {city}\n'
-              f'Температура: {weather}\u2103\n'
-              f'Влажность: {humidity}%\n'
-              f'Давление: {pressure} мм.рт.ст.\n'
-              f'Ветер: {wind} м/с\n'
-              f'Восход солнца: {sunrise_timestamp}\n'
-              f'Закат солнца: {sunset_timestamp}\n'
-              f'Продолжительность дня {length_day}')
-
-
+        pprint(f"{datetime.now().strftime('%Y-%m-%d %H:%M')}\n"
+               f"Погода в городе {city}\n"
+               f"Температура: {weather}\u2103 {wd}"
+               f"\nВлажность: {humidity}%\n"
+               f"Давление: {pressure} мм.рт.ст.\n"
+               f"Ветер: {wind} м/с\n"
+               f"Восход солнца: {sunrise_timestamp}\n"
+               f"Закат солнца: {sunset_timestamp}\n"
+               f"Продолжительность дня {length_day}")
 
     except Exception as ex:
         print(ex)
