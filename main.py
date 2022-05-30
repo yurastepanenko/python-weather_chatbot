@@ -7,7 +7,8 @@ from config import open_weather_token
 
 
 def get_weather(city, open_weather_token):
-
+    """Процедура получает по АПИ погоду(токен мы зарегили заранее)
+    Парсит ответ в виде джейсона и возвращает пользователю"""
     try:
         # r- наш запрос "units": "metric" - для того чтобы получить в цельсиях,
         # а не в Кельвинах
@@ -44,6 +45,9 @@ def get_weather(city, open_weather_token):
 
 
 def main():
+    """
+        Основная процедура, которая запускает нашу программу
+    """
     city = input('Введите город для получения погоды: ')
     get_weather(city, open_weather_token)
 
