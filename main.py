@@ -1,4 +1,5 @@
 from datetime import datetime
+from pprint import pprint
 
 import requests
 from config import open_weather_token
@@ -13,7 +14,7 @@ def get_weather(city, open_weather_token):
             f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={open_weather_token}',
             params={"units": "metric"})
         data = r.json()
-        print(data)
+        pprint(data)
 
 
 
